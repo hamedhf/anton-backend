@@ -60,6 +60,10 @@ app.get('/profile/:id', (req, res) => {
     res.status(404).json('no such user');
 });
 
+app.put('/image', (req, res) => {
+    res.json('image count updated');
+});
+
 app.listen(3000, () => {
     console.log('app is running');
 });
