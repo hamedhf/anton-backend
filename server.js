@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import cors from 'cors';
 import index from './views/index.js';
+import userInfo from './views/user-info.js';
 import imageBoxes from './views/image-boxes.js';
 
 const app = express();
@@ -53,15 +54,7 @@ app.post('/register', (req, res) => {
     res.json(database.users[database.users.length - 1]);
 });
 
-app.get('/profile/:id', (req, res) => {
-    const { id } = req.params;
-    database.users.forEach( user => {
-        if(user.id === id){
-            res.json(user);
-        }
-    });
-    res.status(404).json('no such user');
-});
+app.get('/profile/:id', userInfo({database: database}));
 
 app.put('/image', imageBoxes({}));
 
