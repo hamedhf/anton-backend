@@ -1,7 +1,12 @@
-const express = require('express');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import cors from 'cors';
+import index from './views/index.js';
+import imageBoxes from './views/image-boxes.js';
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const database = {
     users: [
@@ -24,9 +29,7 @@ const database = {
     ]
 };
 
-app.get('/', (req, res) => {
-    res.send('this is working');
-});
+app.get('/', index({database: database}));
 
 app.post('/signin', (req, res) => {
     if(req.body.email === database.users[0].email && 
@@ -60,12 +63,11 @@ app.get('/profile/:id', (req, res) => {
     res.status(404).json('no such user');
 });
 
-app.put('/image', (req, res) => {
-    res.json('image count updated');
-});
+app.put('/image', imageBoxes({}));
+
 
 app.listen(3000, () => {
-    console.log('app is running');
+    console.log('server is running at port 3000');
 });
 
 /*
