@@ -1,17 +1,19 @@
 const userInfo = (props) => {
-    const {database} = props;
+	const {database} = props;
 
-    return (req, res) => {
-        const { id } = req.params;
-        database.users.every( user => {
-            if(user.id === id){
-                res.json(user);
-                return false;
-            }
-            return true;
-        });
-        res.status(404).json('no such user');
-    };
+	return (req, res) => {
+		const { id } = req.params;
+
+		database.select('*').from('users').where({id})
+			.then(usersArray => {
+				if(usersArray.length === 0){
+					res.status(400).json('no such user');
+				}else{
+					res.json(usersArray[0]);
+				}
+			})
+			.catch(err => res.status(400).json('error getting user'));
+	};
 };
 
 export default userInfo;

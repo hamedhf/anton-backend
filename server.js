@@ -21,28 +21,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const database = {
-    users: [
-        {
-            id : '123',
-            name : 'john',
-            email : 'john@gmail.com',
-            password : '1234',
-            entries : 0,
-            joined : new Date()
-        },
-        {
-            id : '124',
-            name : 'ali',
-            email : 'ali@gmail.com',
-            password : '1234',
-            entries : 0,
-            joined : new Date()
-        }
-    ]
-};
-
-app.get('/', index({database: database}));
+app.get('/', index({database: db}));
 
 app.post('/signin', (req, res) => {
     if(req.body.email === database.users[0].email && 
@@ -57,7 +36,7 @@ app.post('/signin', (req, res) => {
 app.post('/register', register({database: db}));
 
 //get a user infos
-app.get('/profile/:id', userInfo({database: database}));
+app.get('/profile/:id', userInfo({database: db}));
 
 //detect face and update db
 app.put('/image', imageBoxes({}));
