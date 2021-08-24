@@ -1,5 +1,4 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';
 import cors from 'cors';
 import index from './views/index.js';
 import register from './views/register.js';
