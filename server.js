@@ -2,8 +2,20 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import cors from 'cors';
 import index from './views/index.js';
+import register from './views/register.js';
 import userInfo from './views/user-info.js';
 import imageBoxes from './views/image-boxes.js';
+import knex from 'knex';
+
+const db = knex({
+    client: 'pg',
+    connection: {
+      host : '127.0.0.1',
+      user : 'hamed',
+      password : '1012',
+      database : 'anton'
+    }
+});
 
 const app = express();
 app.use(express.json());
@@ -41,21 +53,13 @@ app.post('/signin', (req, res) => {
     }
 });
 
-app.post('/register', (req, res) => {
-    const { name, email, password} = req.body;
-    database.users.push({
-        id : '123',
-        name : name,
-        email : email,
-        password : password,
-        entries : 0,
-        joined : new Date()
-    })
-    res.json(database.users[database.users.length - 1]);
-});
+//register user
+app.post('/register', register({database: db}));
 
+//get a user infos
 app.get('/profile/:id', userInfo({database: database}));
 
+//detect face and update db
 app.put('/image', imageBoxes({}));
 
 
