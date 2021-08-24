@@ -7,7 +7,7 @@ import userInfo from './views/user-info.js';
 import imageBoxes from './views/image-boxes.js';
 import knex from 'knex';
 
-const db = knex({
+const database = knex({
     client: 'pg',
     connection: {
       host : '127.0.0.1',
@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/', index({database: db}));
+app.get('/', index({database}));
 
 app.post('/signin', (req, res) => {
     if(req.body.email === database.users[0].email && 
@@ -33,13 +33,13 @@ app.post('/signin', (req, res) => {
 });
 
 //register user
-app.post('/register', register({database: db}));
+app.post('/register', register({database}));
 
 //get a user infos
-app.get('/profile/:id', userInfo({database: db}));
+app.get('/profile/:id', userInfo({database}));
 
 //detect face and update db
-app.put('/image', imageBoxes({}));
+app.put('/image', imageBoxes({database}));
 
 
 app.listen(3000, () => {
