@@ -1,7 +1,7 @@
 const index = (props) => {
     const {database} = props;
     return (req, res) => {
-        res.send(database.users);
+        res.send('index page');
     };
 };
 

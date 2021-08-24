@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import index from './views/index.js';
+import signIn from './views/sign-in.js';
 import register from './views/register.js';
 import userInfo from './views/user-info.js';
 import imageBoxes from './views/image-boxes.js';
@@ -22,14 +23,7 @@ app.use(cors());
 
 app.get('/', index({database}));
 
-app.post('/signin', (req, res) => {
-    if(req.body.email === database.users[0].email && 
-       req.body.password === database.users[0].password ){
-        res.json('success');
-    }else{
-        res.status(400).json('error logging in!');
-    }
-});
+app.post('/signin', signIn({database}));
 
 //register user
 app.post('/register', register({database}));
