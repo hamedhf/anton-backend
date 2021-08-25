@@ -10,10 +10,10 @@ import knex from 'knex';
 const database = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      user : 'hamed',
-      password : '1012',
-      database : 'anton'
+      host : process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false
+      }
     }
 });
 
