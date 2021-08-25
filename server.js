@@ -23,6 +23,7 @@ app.use(cors());
 
 app.get('/', index({database}));
 
+//sign in user
 app.post('/signin', signIn({database}));
 
 //register user
@@ -35,14 +36,6 @@ app.get('/profile/:id', userInfo({database}));
 app.put('/image', imageBoxes({database}));
 
 
-app.listen(3000, () => {
-    console.log('server is running at port 3000');
+app.listen(process.env.PORT, () => {
+    console.log(`server is running at port ${process.env.PORT}`);
 });
-
-/*
-/ --> res = this is working
-/signin --> POST = success/fail
-/register --> POST = user
-/profile/:userId --> GET = user
-/image --> PUT --> user
-*/
