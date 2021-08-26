@@ -33,7 +33,7 @@ app.post('/register', register({database}));
 app.get('/profile/:id', userInfo({database}));
 
 //detect face and update db
-app.put('/image', imageBoxes({database}));
+app.put('/image', (req, res) => { imageBoxes(req, res, database, process.env.API_KEY) });
 
 
 app.listen(process.env.PORT, () => {
